@@ -1,0 +1,25 @@
+# Install required libraries
+!pip install SpeechRecognition pydub
+
+# Upload a .wav file
+from google.colab import files
+uploaded = files.upload()
+
+# Transcribe
+import speech_recognition as sr
+
+recognizer = sr.Recognizer()
+
+# Get the uploaded file name
+file_name = next(iter(uploaded))
+
+with sr.AudioFile(file_name) as source:
+    audio_data = recognizer.record(source)
+
+try:
+    text = recognizer.recognize_google(audio_data)
+    print("Transcription:\n", text)
+except sr.UnknownValueError:
+    print("Could not understand audio.")
+except sr.RequestError:
+    print("Could not connect to Google API.")
