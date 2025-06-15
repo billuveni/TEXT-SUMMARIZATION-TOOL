@@ -1,0 +1,20 @@
+#  Install required library
+!pip install transformers
+
+#  Import and summarize
+from transformers import pipeline
+
+# Load summarizer
+summarizer = pipeline("summarization")
+
+# Input text
+text = """
+Artificial Intelligence (AI) refers to the simulation of human intelligence in machines that are programmed to think like humans. 
+It plays a critical role in sectors like healthcare, automotive, finance, and more. AI can be categorized into narrow AI and general AI. 
+Narrow AI is focused on a single task, while general AI can perform any intellectual task that a human can. 
+The development of AI brings both opportunities and challenges, such as ethical concerns, job displacement, and security risks.
+"""
+
+# Generate summary
+summary = summarizer(text, max_length=100, min_length=30, do_sample=False)
+print("Summary:\n", summary[0]['summary_text'])
