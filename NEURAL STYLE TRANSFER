@@ -1,0 +1,28 @@
+#  Install libraries
+!pip install torch torchvision matplotlib
+
+#  Upload content and style images
+from google.colab import files
+uploaded = files.upload()
+
+#  Load image
+from PIL import Image
+import torchvision.transforms as transforms
+import torch
+import matplotlib.pyplot as plt
+
+def load_image(image_path, max_size=400):
+    image = Image.open(image_path).convert('RGB')
+    transform = transforms.Compose([
+        transforms.Resize(max_size),
+        transforms.ToTensor()
+    ])
+    image = transform(image).unsqueeze(0)
+    return image
+
+# Get filenames
+file_names = list(uploaded.keys())
+content_img = load_image(file_names[0])
+style_img = load_image(file_names[1])
+
+print("Images loaded! Ready for style transfer.")
